@@ -3,12 +3,9 @@
     "description": "Share your latest gameclip and screenshot on Slack with a single command.",
     "version": "0.1.0",
     "keywords": [
-        "middleware",
         "xboxreplay",
-        "xboxlive",
-        "express",
-        "proxy",
-        "ugc"
+        "slack",
+        "bot"
     ],
     "repository": {
         "type": "git",
@@ -16,7 +13,6 @@
     },
     "license": "MIT",
     "types": "./index.d.ts",
-    "main": "./dist/index.js",
     "author": {
         "name": "Alexis Bize",
         "email": "alexis.bize@gmail.com"
@@ -24,7 +20,9 @@
     "scripts": {
         "build": "npm run clean && ./node_modules/.bin/tsc",
         "clean": "rm -rf ./dist",
-        "prepublishOnly": "npm run test && npm run build",
+        "serve": "HOST=${HOST} PORT=${PORT} XBL_EMAIL=${XBL_EMAIL} XBL_PASSWORD=${XBL_PASSWORD} SLACK_SLACK_CLIENT_ID=${SLACK_SLACK_CLIENT_ID} SLACK_CLIENT_SECRET=${SLACK_CLIENT_SECRET} node ./index.js",
+        "start": "npm run build && npm run serve",
+        "now-build": "npm run build",
         "test": "echo \"No tests specified\""
     },
     "dependencies": {

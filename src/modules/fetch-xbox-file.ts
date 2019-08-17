@@ -1,5 +1,5 @@
 import * as XboxLiveAPI from '@xboxreplay/xboxlive-api';
-import XBLAuthenticateMethod from '../modules/authenticate';
+import XBLAuthenticateMethod from './authenticate';
 
 const fetchPlayerInfo = async (
     gamertag: string,
@@ -61,10 +61,13 @@ export default async (type: string, gamertag: string) => {
             : [(fileMetadata as XboxLiveAPI.ScreenshotNode).screenshotId, 'screenshot.png'];
 
     return {
-        id: fileId,
-        title: fileMetadata.titleName,
-        gamertag: playerInfo.gamertag,
-        picture: playerInfo.picture,
+        title_name: fileMetadata.titleName,
+        player_gamertag: playerInfo.gamertag || gamertag,
+        player_picture: playerInfo.picture,
+        xboxreplay_url: `https://www.xboxreplay.net/player/${playerInfo.gamertag ||
+            gamertag}/${
+            type === 'gameclip' ? 'clips' : 'screenshots'
+        }/${fileId}`,
         preview_path: `/ugc-files/${type}/${fileMetadata.xuid}/${
             fileMetadata.scid
         }/${fileId}/thumbnail-large.png`,
