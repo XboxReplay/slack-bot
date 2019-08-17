@@ -68,21 +68,22 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
                 attachments: [
                     {
                         color: '#198e14',
-                        author_name: `${
-                            response.player_gamertag.endsWith('s')
-                                ? `${response.player_gamertag}' ${type}`
-                                : `${response.player_gamertag}'s ${type}`
-                        }`,
-                        author_link: response.xboxreplay_url,
-                        author_icon: response.player_picture,
-                        title: response.title_name,
-                        title_link: response.xboxreplay_url,
-                        image_url: `${domain}${response.preview_path}`,
+                        author_name: response.player.name.endsWith('s')
+                            ? `${response.player.name}' ${type}`
+                            : `${response.player.name}'s ${type}`,
+                        author_link: response.xboxreplay.profileUrl,
+                        author_icon: response.player.pictureUrl,
+                        title: response.item.titleName,
+                        title_link: response.xboxreplay.gameUrl,
+                        image_url: `${domain}${response.item.previewPath}`,
                         actions: [
                             {
                                 type: 'button',
-                                text: type === 'gameclip' ? 'Play' : 'Download',
-                                url: `${domain}${response.download_path}`,
+                                text:
+                                    type === 'gameclip'
+                                        ? '▶️ Play'
+                                        : '⏬ Download',
+                                url: `${domain}${response.item.actionPath}`,
                                 style: 'primary'
                             }
                         ]

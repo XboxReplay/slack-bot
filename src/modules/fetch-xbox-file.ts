@@ -60,19 +60,34 @@ export default async (type: string, gamertag: string) => {
             ? [(fileMetadata as XboxLiveAPI.GameclipNode).gameClipId, 'gameclip.mp4']
             : [(fileMetadata as XboxLiveAPI.ScreenshotNode).screenshotId, 'screenshot.png'];
 
+    const proxyPath = `/ugc-files/${type}/${fileMetadata.xuid}/${
+        fileMetadata.scid
+    }/${fileId}`;
+
     return {
-        title_name: fileMetadata.titleName,
-        player_gamertag: playerInfo.gamertag || gamertag,
-        player_picture: playerInfo.picture,
-        xboxreplay_url: `https://www.xboxreplay.net/player/${playerInfo.gamertag ||
-            gamertag}/${
-            type === 'gameclip' ? 'clips' : 'screenshots'
-        }/${fileId}`,
-        preview_path: `/ugc-files/${type}/${fileMetadata.xuid}/${
-            fileMetadata.scid
-        }/${fileId}/thumbnail-large.png`,
-        download_path: `/ugc-files/${type}/${fileMetadata.xuid}/${
-            fileMetadata.scid
-        }/${fileId}/${fileName}`
+        xboxreplay: {
+            gameUrl: `https://www.xboxreplay.net/games/${fileMetadata.titleId}`,
+            mediaUrl: `https://www.xboxreplay.net/player/${playerInfo.gamertag ||
+                gamertag}/${
+                type === 'gameclip' ? 'clips' : 'screenshots'
+            }/${fileId}`,
+            profileUrl: `https://www.xboxreplay.net/player/${playerInfo.gamertag ||
+                gamertag}`
+        },
+        player: {
+            name: playerInfo.gamertag || gamertag,
+            pictureUrl:
+                playerInfo.picture !== null
+                    ? `${playerInfo.picture.replace(
+                          'http://images-eds.xboxlive.com',
+                          'https://images-eds-ssl.xboxlive.com'
+                      )}&h=120&w=120`
+                    : null
+        },
+        item: {
+            titleName: fileMetadata.titleName,
+            previewPath: `${proxyPath}/thumbnail-large.png`,
+            actionPath: `${proxyPath}/${fileName}`
+        }
     };
 };
