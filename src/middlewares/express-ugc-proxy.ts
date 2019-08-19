@@ -1,12 +1,6 @@
 import * as UGCMiddleware from '@xboxreplay/express-ugc-proxy';
+import UGCMiddlewareConfig from '../config/express-ugc-middleware';
 import XBLAuthenticateMethod from '../modules/authenticate';
 
 export default () =>
-    UGCMiddleware.handle(XBLAuthenticateMethod, {
-        redirectOnFetch: true,
-        debug: true,
-        fileTypesMapping: {
-            gameclips: 'gameclip',
-            screenshots: 'screenshot'
-        }
-    });
+    UGCMiddleware.handle(XBLAuthenticateMethod, UGCMiddlewareConfig);

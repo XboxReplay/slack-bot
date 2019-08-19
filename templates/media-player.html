@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>XboxReplay — Slack Bot (Player)</title>
+        <meta name="viewport" content="width=device-width, minimal-ui, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta name="robots" content="noindex, nofollow" />
+        <meta charset="utf-8" />
+        <style>
+            html, body {
+                background-color: #1a1a1a;
+                height: 100vh;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                width: 100vw;
+            }
+
+            a {
+                color: white;
+                text-decoration: none;
+            }
+
+            #root {
+                margin: 0 auto;
+                max-width: 1020px;
+                width: 100%;
+            }
+
+            #container {
+                margin-top: 50vh;
+                padding: 20px;
+                transform: translateY(-50%);
+            }
+
+            #footer {
+                margin-top: -4px;
+                width: 100%;
+            }
+
+            #footer * {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            #footer .about {
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
+                padding: 10px 15px 5px 10px;
+            }
+
+            #footer .about .logo {
+                height: 24px;
+            }
+
+            #footer .about .name {
+                font-size: 12px;
+                font-weight: bold;
+                padding-left: 4px;
+                margin-top: -2px;
+            }
+
+            #content, #video {
+                width: 100%;
+            }
+
+            #video {
+                border: 5px;
+                overflow: hidden;
+                outline: 0;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="root">
+            <div id="container">
+                <content id="content">
+                    <video id="video" controls autoplay muted playsinline poster="{VIDEO_POSTER}">
+                        <source src="{VIDEO_SRC}" type="video/mp4" />
+                    </video>
+                </content>
+                <footer id="footer">
+                    <div class="about">
+                        <a href="https://www.xboxreplay.net/" target="_blank">
+                            <img class="logo" src="https://www.xboxreplay.net/assets/images/xbox-replay-logo.svg" />
+                            <span class="name">XboxReplay.net</span>
+                        </a>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </body>
+</html>

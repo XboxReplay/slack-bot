@@ -1,5 +1,6 @@
 import * as XboxLiveAPI from '@xboxreplay/xboxlive-api';
 import XBLAuthenticateMethod from './authenticate';
+import { stringify } from 'querystring';
 
 const fetchPlayerInfo = async (
     gamertag: string,
@@ -64,6 +65,12 @@ export default async (type: string, gamertag: string) => {
         fileMetadata.scid
     }/${fileId}`;
 
+    const hashProperties = {
+        xuid: fileMetadata.xuid,
+        scid: fileMetadata.scid,
+        id: fileId
+    };
+
     return {
         xboxreplay: {
             gameUrl: `https://www.xboxreplay.net/games/${fileMetadata.titleId}`,
@@ -87,7 +94,12 @@ export default async (type: string, gamertag: string) => {
         item: {
             titleName: fileMetadata.titleName,
             previewPath: `${proxyPath}/thumbnail-large.png`,
-            actionPath: `${proxyPath}/${fileName}`
+            actionPath:
+                type === 'gameclip'
+                    ? `/media-player?hash=${Buffer.from(
+                          JSON.stringify(hashProperties)
+                      ).toString('base64')}`
+                    : `${proxyPath}/${fileName}`
         }
     };
 };

@@ -16,6 +16,10 @@ const onOAuthCallback = (req: Request, res: Response) => {
             uri: 'https://slack.com/api/oauth.access',
             method: 'POST',
             gzip: true,
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
             body: stringify({
                 client_id: slackConfig.clientId,
                 client_secret: slackConfig.clientSecret,
@@ -96,7 +100,7 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 
 export default () => {
     const router = Router();
-    router.get('/slack/oauth-callback', onOAuthCallback);
-    router.post('/slack/fetch-xbox-file', onFetchXboxFile);
+    router.get('/oauth-callback', onOAuthCallback);
+    router.post('/fetch-xbox-file', onFetchXboxFile);
     return router;
 };

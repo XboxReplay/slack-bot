@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import slackRoutes from './routes/slack';
+import mediaPlayerRoutes from './routes/media-player';
 import xPoweredByMiddleware from './middlewares/x-powered-by';
 import expressUGCProxyMiddleware from './middlewares/express-ugc-proxy';
 
@@ -13,10 +14,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(xPoweredByMiddleware());
 app.use('/ugc-files', expressUGCProxyMiddleware());
-app.use('/', slackRoutes());
+app.use('/media-player', mediaPlayerRoutes());
+app.use('/slack', slackRoutes());
 
 app.get('/favicon.ico', (_, res) =>
-    res.redirect(301, 'https://www.xboxreplay/net/favicon.ico')
+    res.redirect(301, 'https://www.xboxreplay.net/favicon.ico')
 );
 
 app.get('*', (_, res) =>
