@@ -26,18 +26,19 @@ const fetchPlayerInfo = async (
 const fetchFiles = (
     type: string,
     gamertag: string,
+    maxItems: number, // Using position as maxItems
     authorization: XboxLiveAPI.XBLAuthorization
 ) =>
     XboxLiveAPI[
         type === 'gameclip' ? 'getPlayerGameclips' : 'getPlayerScreenshots'
-    ](gamertag, authorization, { maxItems: 1 });
+    ](gamertag, authorization, { maxItems });
 
-export default async (type: string, gamertag: string) => {
+export default async (type: string, gamertag: string, position: number) => {
     const authorization = await XBLAuthenticateMethod();
 
     const [playerInfo, playerFiles] = await Promise.all([
         fetchPlayerInfo(gamertag, authorization),
-        fetchFiles(type, gamertag, authorization) as any
+        fetchFiles(type, gamertag, position, authorization) as any
     ]).catch(() => [null, null]);
 
     if (playerInfo === null || playerFiles === null) {
@@ -47,9 +48,9 @@ export default async (type: string, gamertag: string) => {
     const fileMetadata =
         type === 'gameclip'
             ? (playerFiles as { gameClips: XboxLiveAPI.GameclipNode[] })
-                  .gameClips[0]
+                  .gameClips[position - 1]
             : (playerFiles as { screenshots: XboxLiveAPI.ScreenshotNode[] })
-                  .screenshots[0];
+                  .screenshots[position - 1];
 
     if (fileMetadata === void 0) {
         return null;

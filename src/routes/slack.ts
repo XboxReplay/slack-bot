@@ -48,17 +48,27 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
         return res.sendStatus(400);
     }
 
-    const explode = text.split(' ');
-    const type = explode[0] || null;
-    const gamertag = explode.slice(1).join(' ') || null;
+    const explodeEntry = text.split(' ');
+    const gamertag = explodeEntry.slice(1).join(' ') || null;
+
+    let type = explodeEntry[0] || null;
 
     if (type === null || gamertag === null) {
         return res.sendStatus(400);
-    } else if (['gameclip', 'screenshot'].includes(type) === false) {
+    }
+
+    const explodeType = type.split('-');
+    const position = Math.max(explodeType[1] || 1, 1);
+
+    type = explodeType[0];
+
+    if (type === 'g') type = 'gameclip';
+    else if (type === 's') type = 'screenshot';
+    else if (['gameclip', 'screenshot'].includes(type) === false) {
         return res.sendStatus(400);
     }
 
-    fetchFile(type, gamertag)
+    fetchFile(type, gamertag, position)
         .then(response => {
             if (response === null) {
                 return res.sendStatus(404);
