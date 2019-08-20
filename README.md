@@ -19,4 +19,4 @@ Share your latest gameclip and screenshot on Slack with a single command.
 
 ### Media player
 
-<img src="media-player-preview.png" width="920" />
+<a href="https://slack-bot.xboxreplay.now.sh/media-player?data=eyJ4dWlkIjoiMjUzNTQ2NTUxNTA4MjMyNCIsInNjaWQiOiJkMWFkYzhhYS0wYTMxLTQ0MDctOTBmMi03ZTliNTRiMDM0N2MiLCJpZCI6IjY5N2FlMzJlLTVkMGMtNDNkNi05NDU4LTFhNjVjYzQzYjIzZSJ9" target="_blank"><img alt="Play on XboxReplay" src="media-player-preview.png" width="920" /></a>
