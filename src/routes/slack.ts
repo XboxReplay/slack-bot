@@ -4,6 +4,11 @@ import fetchFile from '../modules/fetch-xbox-file';
 import { Router, Request, Response } from 'express';
 import { stringify } from 'querystring';
 
+const createErrorMessage = (message = 'Something went wrong...') => ({
+    response_type: 'ephemeral',
+    text: `*Error:* ${message}`
+});
+
 const onOAuthCallback = (req: Request, res: Response) => {
     const { code = '' } = req.query;
 
@@ -45,10 +50,7 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
     const { text = '', channel_id = null } = body;
 
     if (text.length === 0) {
-        return res.send({
-            type: 'ephemeral',
-            text: 'Error: Empty parameters'
-        });
+        return res.send(createErrorMessage('Empty parameters'));
     } else if (channel_id === null) return res.sendStatus(400);
 
     const explodeEntry = text.split(' ');
@@ -57,10 +59,9 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
     let type = explodeEntry[0] || null;
 
     if (type === null || gamertag === null) {
-        return res.send({
-            response_type: 'ephemeral',
-            text: 'Error: Some parameters are missing'
-        });
+        return res.send(
+            createErrorMessage('Some required parameters are missing')
+        );
     }
 
     const explodeType = type.split('-');
@@ -71,30 +72,31 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
     if (type === 'g') type = 'gameclip';
     else if (type === 's') type = 'screenshot';
     else if (['gameclip', 'screenshot'].includes(type) === false) {
-        return res.send({
-            response_type: 'ephemeral',
-            text: 'Error: Please specify a valid type [ gameclip | screenshot ]'
-        });
+        return res.send(
+            createErrorMessage(
+                'Please specify a valid type [ gameclip | screenshot ]'
+            )
+        );
     }
 
     if (position > 100 || position < 0) {
-        // Max items
-        return res.send({
-            response_type: 'ephemeral',
-            text:
+        return res.send(
+            createErrorMessage(
                 position > 100
-                    ? 'Error: Position must be less than or equal to 100'
-                    : 'Error: Position must be larger than or equal to 1'
-        });
+                    ? 'Position must be less than or equal to 100'
+                    : 'Position must be larger than or equal to 1'
+            )
+        );
     }
 
     fetchFile(type, gamertag, position)
         .then(response => {
             if (response === null) {
-                return res.send({
-                    response_type: 'ephemeral',
-                    text: 'Error: No items found for the targeted gamertag'
-                });
+                return res.send(
+                    createErrorMessage(
+                        'No items found for the targeted gamertag'
+                    )
+                );
             }
 
             const domain = req.protocol + '://' + req.get('host');
@@ -128,12 +130,7 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
                 ]
             });
         })
-        .catch(() =>
-            res.send({
-                response_type: 'ephemeral',
-                text: 'Error: Something went wrong...'
-            })
-        );
+        .catch(() => res.send(createErrorMessage()));
 };
 
 export default () => {
