@@ -59,26 +59,12 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
     if (type === null || gamertag === null) {
         return res.send({
             response_type: 'ephemeral',
-            text:
-                type === null
-                    ? 'Error: Please specify a valid type [ gameclip | screenshot ]'
-                    : 'Error: Please specify a gamertag'
+            text: 'Error: Some parameters are missing'
         });
     }
 
     const explodeType = type.split('-');
     const position = explodeType[1] || 1;
-
-    if (position > 100 || position < 0) {
-        // Max items
-        return res.send({
-            response_type: 'ephemeral',
-            text:
-                position > 100
-                    ? 'Error: Position must be less than or equal to 100'
-                    : 'Error: Position must be larger than or equal to 1'
-        });
-    }
 
     type = explodeType[0];
 
@@ -88,6 +74,17 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
         return res.send({
             response_type: 'ephemeral',
             text: 'Error: Please specify a valid type [ gameclip | screenshot ]'
+        });
+    }
+
+    if (position > 100 || position < 0) {
+        // Max items
+        return res.send({
+            response_type: 'ephemeral',
+            text:
+                position > 100
+                    ? 'Error: Position must be less than or equal to 100'
+                    : 'Error: Position must be larger than or equal to 1'
         });
     }
 
