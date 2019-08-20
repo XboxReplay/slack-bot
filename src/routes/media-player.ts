@@ -2,6 +2,7 @@ import UGCMiddlewareConfig from '../config/express-ugc-middleware';
 import { Router, Request, Response } from 'express';
 import { join } from 'path';
 import { readFileSync } from 'fs';
+import { HMACSHA1 } from '../modules/utils';
 
 let mediaPlayerFileData: string | null = null;
 
@@ -13,13 +14,15 @@ const handlePlayer = (req: Request, res: Response) => {
     }
 
     const parameters = Buffer.from(data, 'base64').toString('ascii');
-    const { xuid = '', scid = '', id = '' } = (() => {
+    const { xuid = '', scid = '', id = '', sign = '' } = (() => {
         // prettier-ignore
         try { return JSON.parse(parameters); }
         catch (err) { return {}; }
     })();
 
-    if ([xuid, scid, id].includes('')) {
+    if ([xuid, scid, id, sign].includes('')) {
+        return res.sendStatus(400);
+    } else if (sign !== HMACSHA1(JSON.stringify({ xuid, scid, id }))) {
         return res.sendStatus(400);
     }
 

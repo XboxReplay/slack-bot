@@ -1,6 +1,6 @@
 import * as XboxLiveAPI from '@xboxreplay/xboxlive-api';
 import XBLAuthenticateMethod from './authenticate';
-import { stringify } from 'querystring';
+import { HMACSHA1 } from './utils';
 
 const fetchPlayerInfo = async (
     gamertag: string,
@@ -66,11 +66,18 @@ export default async (type: string, gamertag: string, position: number) => {
         fileMetadata.scid
     }/${fileId}`;
 
-    const dataProperties = {
+    const baseProperties = {
         xuid: fileMetadata.xuid,
         scid: fileMetadata.scid,
         id: fileId
     };
+
+    const dataProperties = Buffer.from(
+        JSON.stringify({
+            ...baseProperties,
+            sign: HMACSHA1(JSON.stringify(baseProperties))
+        })
+    ).toString('base64');
 
     return {
         xboxreplay: {
@@ -97,9 +104,7 @@ export default async (type: string, gamertag: string, position: number) => {
             previewPath: `${proxyPath}/thumbnail-large.png`,
             actionPath:
                 type === 'gameclip'
-                    ? `/media-player?data=${Buffer.from(
-                          JSON.stringify(dataProperties)
-                      ).toString('base64')}`
+                    ? `/media-player?data=${encodeURIComponent(dataProperties)}`
                     : `${proxyPath}/${fileName}`
         }
     };
