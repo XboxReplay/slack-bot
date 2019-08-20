@@ -16,3 +16,7 @@ Share your latest gameclip and screenshot on Slack with a single command.
 /xboxreplay [ screenshot-8 | gameclip-8 ] gamertag
 /xboxreplay [ s-8 | g-8 ] gamertag
 ```
+
+### Media player
+
+<img src="media-player-preview.png" width="920" />
