@@ -19,4 +19,4 @@ Share your latest gameclip and screenshot on Slack with a single command.
 
 ### Media player
 
-<a href="https://slack-bot.xboxreplay.now.sh/media-player?data=eyJ4dWlkIjoiMjUzNTQ2NTUxNTA4MjMyNCIsInNjaWQiOiJkMWFkYzhhYS0wYTMxLTQ0MDctOTBmMi03ZTliNTRiMDM0N2MiLCJpZCI6IjY5N2FlMzJlLTVkMGMtNDNkNi05NDU4LTFhNjVjYzQzYjIzZSJ9" target="_blank"><img alt="Play on XboxReplay" src="media-player-preview.png" width="920" /></a>
+<a href="https://slack-bot.xboxreplay.now.sh/media-player?data=eyJ4dWlkIjoiMjUzNTQ2NTUxNTA4MjMyNCIsInNjaWQiOiJkMWFkYzhhYS0wYTMxLTQ0MDctOTBmMi03ZTliNTRiMDM0N2MiLCJpZCI6IjJmOTc4N2UyLTcwOWEtNGIxNi05N2Y0LTRiNjFkMzFiMTlmMiIsInNpZ24iOiJiOGIxZjNlM2YyNjY4ZGYyYjM2NzUxZmE3OWQ3NjNmN2QwODU0MmI2In0%3D" target="_blank"><img alt="Play on XboxReplay" src="media-player-preview.png" width="920" /></a>
