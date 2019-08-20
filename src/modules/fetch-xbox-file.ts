@@ -66,7 +66,7 @@ export default async (type: string, gamertag: string, position: number) => {
         fileMetadata.scid
     }/${fileId}`;
 
-    const hashProperties = {
+    const dataProperties = {
         xuid: fileMetadata.xuid,
         scid: fileMetadata.scid,
         id: fileId
@@ -97,8 +97,8 @@ export default async (type: string, gamertag: string, position: number) => {
             previewPath: `${proxyPath}/thumbnail-large.png`,
             actionPath:
                 type === 'gameclip'
-                    ? `/media-player?hash=${Buffer.from(
-                          JSON.stringify(hashProperties)
+                    ? `/media-player?data=${Buffer.from(
+                          JSON.stringify(dataProperties)
                       ).toString('base64')}`
                     : `${proxyPath}/${fileName}`
         }

@@ -44,9 +44,12 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 
     const { text = '', channel_id = null } = body;
 
-    if (text.length === 0 || channel_id === null) {
-        return res.sendStatus(400);
-    }
+    if (text.length === 0) {
+        return res.send({
+            type: 'ephemeral',
+            text: 'Error: Empty parameters'
+        });
+    } else if (channel_id === null) return res.sendStatus(400);
 
     const explodeEntry = text.split(' ');
     const gamertag = explodeEntry.slice(1).join(' ') || null;
@@ -54,24 +57,47 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
     let type = explodeEntry[0] || null;
 
     if (type === null || gamertag === null) {
-        return res.sendStatus(400);
+        return res.send({
+            response_type: 'ephemeral',
+            text:
+                type === null
+                    ? 'Error: Please specify a valid type [ gameclip | screenshot ]'
+                    : 'Error: Please specify a gamertag'
+        });
     }
 
     const explodeType = type.split('-');
-    const position = Math.max(explodeType[1] || 1, 1);
+    const position = explodeType[1] || 1;
+
+    if (position > 100 || position < 0) {
+        // Max items
+        return res.send({
+            response_type: 'ephemeral',
+            text:
+                position > 100
+                    ? 'Error: Position must be less than or equal to 100'
+                    : 'Error: Position must be larger than or equal to 1'
+        });
+    }
 
     type = explodeType[0];
 
     if (type === 'g') type = 'gameclip';
     else if (type === 's') type = 'screenshot';
     else if (['gameclip', 'screenshot'].includes(type) === false) {
-        return res.sendStatus(400);
+        return res.send({
+            response_type: 'ephemeral',
+            text: 'Error: Please specify a valid type [ gameclip | screenshot ]'
+        });
     }
 
     fetchFile(type, gamertag, position)
         .then(response => {
             if (response === null) {
-                return res.sendStatus(404);
+                return res.send({
+                    response_type: 'ephemeral',
+                    text: 'Error: No items found for the targeted gamertag'
+                });
             }
 
             const domain = req.protocol + '://' + req.get('host');
@@ -105,7 +131,12 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
                 ]
             });
         })
-        .catch(() => res.sendStatus(500));
+        .catch(() =>
+            res.send({
+                response_type: 'ephemeral',
+                text: 'Error: Something went wrong...'
+            })
+        );
 };
 
 export default () => {

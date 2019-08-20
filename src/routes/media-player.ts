@@ -6,13 +6,13 @@ import { readFileSync } from 'fs';
 let mediaPlayerFileData: string | null = null;
 
 const handlePlayer = (req: Request, res: Response) => {
-    const { hash = null } = req.query;
+    const { data = null } = req.query;
 
-    if (hash === null) {
+    if (data === null) {
         return res.sendStatus(400);
     }
 
-    const parameters = Buffer.from(hash, 'base64').toString('ascii');
+    const parameters = Buffer.from(data, 'base64').toString('ascii');
     const { xuid = '', scid = '', id = '' } = (() => {
         // prettier-ignore
         try { return JSON.parse(parameters); }

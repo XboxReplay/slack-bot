@@ -8,5 +8,15 @@ Share your latest gameclip and screenshot on Slack with a single command.
 
 ### Usage
 ```
+// Will return most recent item
 /xboxreplay [ screenshot | gameclip ] gamertag
+
+// Aliases
+/xboxreplay [ s | g ] gamertag
+
+// Will return the 8th item (max: 100)
+/xboxreplay [ screenshot-8 | gameclip-8 ] gamertag
+
+// Aliases
+/xboxreplay [ s-8 | g-8 ] gamertag
 ```
