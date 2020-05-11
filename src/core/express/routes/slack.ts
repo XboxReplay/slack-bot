@@ -118,14 +118,10 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 						color: '#198e14',
 						author_name: item.author.gamertag.endsWith('s')
 							? `${item.author.gamertag}' ${
-									type === 'screenshot'
-										? 'screnshots'
-										: 'clip'
+									type === 'screenshot' ? 'screnshot' : 'clip'
 							  }`
 							: `${item.author.gamertag}'s ${
-									type === 'screenshot'
-										? 'screnshots'
-										: 'clip'
+									type === 'screenshot' ? 'screnshot' : 'clip'
 							  }`,
 						author_link: `https://www.xboxreplay.net/player/${escapedGamertag}`,
 						author_icon: item.author.gamerpic,
