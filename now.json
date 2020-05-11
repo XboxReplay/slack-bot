@@ -1,29 +1,20 @@
 {
-	"name": "slack-bot",
-	"scope": "xboxreplay",
-	"public": false,
 	"version": 2,
-	"env": {
-		"XBL_EMAIL": "@xbl-email",
-		"XBL_PASSWORD": "@xbl-password",
-		"SLACK_CLIENT_ID": "@slack-client-id",
-		"SLACK_CLIENT_SECRET": "@slack-client-secret",
-		"MEDIA_PLAYER_KEY": "@media-player-key"
-	},
+    "public": false,
+	"scope": "xboxreplay",
 	"builds": [
 		{
-			"src": "index.js",
-			"use": "@now/node"
-		},
-		{
-			"src": "*.html",
-			"use": "@now/static"
+			"src": "/src/*.ts",
+			"use": "@now/node",
+			"config": {
+				"distDir": "dist"
+			}
 		}
-	],
-	"routes": [
+    ],
+    "routes": [
 		{
-			"src": "/(.*)",
-			"dest": "/index.js"
+            "src": "/(.*)",
+			"dest": "/src/index.ts"
 		}
-	]
+    ]
 }
