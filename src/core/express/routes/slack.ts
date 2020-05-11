@@ -117,8 +117,16 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 					{
 						color: '#198e14',
 						author_name: item.author.gamertag.endsWith('s')
-							? `${item.author.gamertag}' ${type}`
-							: `${item.author.gamertag}'s ${type}`,
+							? `${item.author.gamertag}' ${
+									type === 'screenshot'
+										? 'screnshots'
+										: 'clip'
+							  }`
+							: `${item.author.gamertag}'s ${
+									type === 'screenshot'
+										? 'screnshots'
+										: 'clip'
+							  }`,
 						author_link: `https://www.xboxreplay.net/player/${escapedGamertag}`,
 						author_icon: item.author.gamerpic,
 						title: item.game.name,
@@ -131,7 +139,10 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 									type === 'gameclip'
 										? '▶️ Play'
 										: '⏬ Download',
-								url: `https://play.xboxreplay.net?gamertag=${escapedGamertag}&id=${item.id}&embed=false&type=video&autoplay=true`,
+								url:
+									type === 'screenshot'
+										? item.download_urls.source
+										: `https://play.xboxreplay.net?gamertag=${escapedGamertag}&id=${item.id}&embed=false&type=video&autoplay=true`,
 								style: 'primary'
 							}
 						]
