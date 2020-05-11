@@ -1,17 +1,21 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "outDir": "./dist",
-        "module": "commonjs",
-        "strict": true,
-        "alwaysStrict": true,
-        "noImplicitAny": true,
-        "removeComments": true,
-    },
-    "include": [
-        "./src/**/*"
-    ],
-    "exclude": [
-        "./node_modules"
-    ]
+	"compilerOptions": {
+		"target": "es2016",
+		"module": "commonjs",
+		"outDir": "./dist",
+		"strict": true,
+		"sourceMap": false,
+		"alwaysStrict": true,
+		"removeComments": true,
+		"noImplicitAny": true,
+		"noUnusedLocals": true,
+		"noImplicitReturns": true,
+		"noUnusedParameters": true,
+		"skipLibCheck": false,
+		"esModuleInterop": true,
+		"declaration": false,
+		"resolveJsonModule": true
+	},
+	"include": ["./src/**/*"],
+	"exclude": ["./node_modules"]
 }

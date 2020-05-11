@@ -90,7 +90,7 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 		);
 	}
 
-	seachFiles(
+	return seachFiles(
 		gamertag,
 		type === 'gameclip' ? 'clips' : 'screenshots',
 		position

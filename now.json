@@ -1,8 +1,7 @@
 {
-	"name": "slack-bot",
-	"scope": "xboxreplay",
-	"public": false,
 	"version": 2,
+    "public": false,
+	"scope": "xboxreplay",
 	"builds": [
 		{
 			"src": "/src/*.ts",
