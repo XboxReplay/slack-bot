@@ -1,4 +1,5 @@
 import axios from 'axios';
+import config from '../config';
 
 export const seachFiles = async (
 	gamertag: string,
@@ -11,8 +12,8 @@ export const seachFiles = async (
 		)}&limit=${limit}`,
 		headers: {
 			Authorization: [
-				process.env.XR_AUTHORIZATION_TYPE || '',
-				process.env.XR_AUTHORIZATION_CREDENTIALS || ''
+				config.xboxreplay.authorizationType,
+				config.xboxreplay.authorizationCredentials
 			].join(' ')
 		}
 	}).then(response => response.data);

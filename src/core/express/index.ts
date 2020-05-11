@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import slackRoutes from './routes/slack';
 import config from './config';
 
 const host = String(config.host);

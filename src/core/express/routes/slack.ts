@@ -101,7 +101,7 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 			if (item === void 0) {
 				return res.send(
 					createErrorMessage(
-						'No items found for the targeted gamertag'
+						'No Game DVR items found for the targeted gamertag'
 					)
 				);
 			}
