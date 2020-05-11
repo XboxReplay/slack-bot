@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from '../../../config';
 import { Request, Response, Router } from 'express';
 import { seachFiles } from '../../../modules/xboxreplay-api';
+import { stringify } from 'querystring';
 
 const createErrorMessage = (message = 'Something went wrong...') => ({
 	response_type: 'ephemeral',
@@ -22,11 +23,11 @@ const onOAuthCallback = (req: Request, res: Response) => {
 			Accept: 'application/json',
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
-		data: {
+		data: stringify({
 			client_id: config.slack.clientId,
 			client_secret: config.slack.clientSecret,
 			code
-		}
+		})
 	})
 		.then(response => {
 			return res.send(
