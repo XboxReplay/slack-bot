@@ -71,12 +71,12 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 
 	type = explodeType[0];
 
-	if (type === 'g') type = 'gameclip';
+	if (type === 'g' || type === 'c') type = 'clip';
 	else if (type === 's') type = 'screenshot';
-	else if (['gameclip', 'screenshot'].includes(type) === false) {
+	else if (['clip', 'screenshot'].includes(type) === false) {
 		return res.send(
 			createErrorMessage(
-				'Please specify a valid type [ gameclip | screenshot ]'
+				'Please specify a valid type [ clip | screenshot ]'
 			)
 		);
 	}
@@ -93,7 +93,7 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 
 	return seachFiles(
 		gamertag,
-		type === 'gameclip' ? 'clips' : 'screenshots',
+		type === 'clip' ? 'clips' : 'screenshots',
 		position
 	)
 		.then(response => {
@@ -107,6 +107,11 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 				);
 			}
 
+			const authorName = item.author.gamertag.endsWith('s')
+				? `${item.author.gamertag}'`
+				: `${item.author.gamertag}'s`;
+
+			const computeTitle = [authorName, type].join(' ');
 			const escapedGamertag = item.author.gamertag
 				.replace(/ +/g, '-')
 				.toLowerCase();
@@ -116,14 +121,8 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 				channel: body.channel_id,
 				attachments: [
 					{
-						color: '#198e14',
-						author_name: item.author.gamertag.endsWith('s')
-							? `${item.author.gamertag}' ${
-									type === 'screenshot' ? 'screnshot' : 'clip'
-							  }`
-							: `${item.author.gamertag}'s ${
-									type === 'screenshot' ? 'screnshot' : 'clip'
-							  }`,
+						color: '#87d068',
+						author_name: computeTitle,
 						author_link: `https://www.xboxreplay.net/player/${escapedGamertag}`,
 						author_icon: item.author.gamerpic,
 						title: item.game.name,
@@ -139,7 +138,7 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 								url:
 									type === 'screenshot'
 										? item.download_urls.source
-										: `https://play.xboxreplay.net?gamertag=${escapedGamertag}&id=${item.id}&embed=false&type=video&autoplay=true`,
+										: `https://play.xboxreplay.net/video?gamertag=${escapedGamertag}&id=${item.id}&embed=false&autoplay=true`,
 								style: 'primary'
 							}
 						]

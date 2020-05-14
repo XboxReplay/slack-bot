@@ -17,7 +17,10 @@ app.get('/favicon.ico', (_, res) =>
 );
 
 app.get('*', (_, res) =>
-	res.redirect(301, 'https://github.com/XboxReplay/slack-bot')
+	res.redirect(
+		301,
+		'https://slack.com/oauth/authorize?client_id=2566335526.166839191841&scope=chat:write:bot,commands'
+	)
 );
 
 app.listen(port, host, err => {
