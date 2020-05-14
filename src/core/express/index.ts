@@ -19,7 +19,7 @@ app.get('/favicon.ico', (_, res) =>
 app.get('*', (_, res) =>
 	res.redirect(
 		301,
-		'https://slack.com/oauth/authorize?client_id=2566335526.166839191841&scope=chat:write:bot,commands'
+		'https://slack.com/oauth/v2/authorize?client_id=2566335526.166839191841&scope=chat:write,commands'
 	)
 );
 

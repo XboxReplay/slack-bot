@@ -17,7 +17,7 @@ const onOAuthCallback = (req: Request, res: Response) => {
 	}
 
 	return axios({
-		url: 'https://slack.com/api/oauth.access',
+		url: 'https://slack.com/api/oauth.v2.access',
 		method: 'POST',
 		headers: {
 			Accept: 'application/json',
