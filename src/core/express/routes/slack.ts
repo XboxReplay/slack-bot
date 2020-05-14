@@ -132,9 +132,7 @@ const onFetchXboxFile = async (req: Request, res: Response) => {
 							{
 								type: 'button',
 								text:
-									type === 'gameclip'
-										? '▶️ Play'
-										: '⏬ Download',
+									type === 'clip' ? '▶️ Play' : '⏬ Download',
 								url:
 									type === 'screenshot'
 										? item.download_urls.source
